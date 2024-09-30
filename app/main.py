@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from app.core.config import settings
 import uvicorn
-from app.core.database import engine
 
 app = None
 (is_dev_env) = settings.ENVIRONMENT == 'development'
@@ -18,9 +17,3 @@ if __name__ == "__main__":
     environment = settings.ENVIRONMENT
     reload = environment == 'development'
     uvicorn.run("app.main:app", host="0.0.0.0", port=8002, reload=reload)
-    try:
-        with engine.connect() as connection:
-            print("Connection to the database succeeded!")
-    except Exception as e:
-        print(f"Connection to the database failed: {e}")
-
